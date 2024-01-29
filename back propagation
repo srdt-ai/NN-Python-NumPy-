@@ -1,0 +1,21 @@
+def backward(model, X, y, alpha):
+    cache  = forward(model, X)
+    da2 = cache["z"] - y
+    dw2 = cache["a1"].T @ da2
+    da1 = da2 @ model["w2"].T
+    dw1 = X.T @ da1
+    assert(dw2.shape == model["w2"].shape)
+    assert(dw1.shape == model["w1"].shape)
+    model["w1"] -= alpha * dw1
+    model["w2"] -= alpha * dw2
+    return cross_entropy(cache["z"], y)
+
+def cross_entropy(z, y):
+    return - np.sum(np.log(z) * y)
+
+
+
+
+
+
+
